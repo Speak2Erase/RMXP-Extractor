@@ -21,4 +21,10 @@ Gem::Specification.new do |spec|
 
   spec.executables = ["rmxp_extractor"]
   spec.require_paths = ["lib"]
+  spec.add_dependency "oj"
+  spec.add_dependency "ruby-progressbar"
+  spec.add_dependency "fileutils"
+  spec.add_dependency "pathname"
+  spec.add_dependency "json"
+  spec.add_dependency "zlib"
 end
