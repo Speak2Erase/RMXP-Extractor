@@ -1,0 +1,29 @@
+PATH
+  remote: .
+  specs:
+    rmxp_extractor (1.2)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    fileutils (1.5.0)
+    json (2.5.1)
+    oj (3.11.5)
+    pathname (0.1.0)
+    ruby-progressbar (1.11.0)
+    zlib (1.1.0)
+
+PLATFORMS
+  x64-mingw32
+
+DEPENDENCIES
+  fileutils
+  json
+  oj
+  pathname
+  rmxp_extractor!
+  ruby-progressbar
+  zlib
+
+BUNDLED WITH
+   2.1.4
