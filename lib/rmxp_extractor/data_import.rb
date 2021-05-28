@@ -37,7 +37,7 @@ module RMXPExtractor
 
       case name.to_s
       when "xScripts"
-        rpgscript("./", "./Scripts")
+        RMXPExtractor.rpgscript("./", "./Scripts")
         progress.increment
         return
       when "Scripts"

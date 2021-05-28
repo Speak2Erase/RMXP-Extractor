@@ -35,7 +35,7 @@ module RMXPExtractor
       #puts name.to_s
       case name.to_s
       when "xScripts"
-        rpgscript("./", "./Scripts", true)
+        RMXPExtractor.rpgscript("./", "./Scripts", true)
         content[:version] = VERSION
       when "Scripts"
         content[:version] = VERSION
