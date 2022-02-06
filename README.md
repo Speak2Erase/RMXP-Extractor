@@ -1,44 +1,25 @@
 # RMXP-Extractor
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rmxp_extractor`. To experiment with that code, run `bin/console` for an interactive prompt.
+A tool for extracting rxdata to a more usable format, namely JSON. You could probably get it working with XML more easily.
+I made this a while back, so I don't really remember how it works, other than it was pretty clunky and relied heavily on iteration.
 
-TODO: Delete this and the text above, and describe your gem
+Usage:
 
-## Installation
+`rmxp_extractor import|export|sccripts`
 
-Add this line to your application's Gemfile:
+# Import
+Import will import all files in Data_JSON into the rxdata format. It'll take a bit.
 
-```ruby
-gem 'rmxp_extractor'
-```
+# Export
+Export will export all files in Data into json. It's a bit faster than JSON.
 
-And then execute:
+# Script
 
-    $ bundle install
+Allows you to export Scripts/xScripts to a specified folder. You can also import said specified folder back into Scripts/xScripts.
+The last argument `[x]` is optional. Placing just `x` there will extract Scripts.
 
-Or install it yourself as:
+# Is it flawless
 
-    $ gem install rmxp_extractor
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rmxp_extractor. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/rmxp_extractor/blob/master/CODE_OF_CONDUCT.md).
-
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-## Code of Conduct
-
-Everyone interacting in the RMXP-Extractor project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/rmxp_extractor/blob/master/CODE_OF_CONDUCT.md).
+Running export followed by inport should produce an almost identical file with some minor differences. 
+Move routes will display as blank since they have some extra serialization I don't understand yet, although they still work nontheless.
+You may or may not find some files are also a few bytes longer, I'm unsure why. RPG Maker XP probably doesn't exactly follow Marshal spec and cuts some corners.
