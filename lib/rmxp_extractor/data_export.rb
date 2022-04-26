@@ -11,7 +11,7 @@ module RMXPExtractor
     require_relative "classnames"
     require_relative "script_handler"
 
-    window_size = (Readline.get_screen_size[1] - 1).clamp(0, 500)
+    window_size = 120
     progress = ProgressBar.create(
       format: "%a /%e |%B| %p%% %c/%C %r files/sec %t",
       starting_at: 0,
@@ -37,26 +37,8 @@ module RMXPExtractor
       when "xScripts"
         RMXPExtractor.rpgscript("./", "./Scripts", true)
         content[:version] = VERSION
-      when "Scripts"
-        content[:version] = VERSION
-      when "System"
-        content = rxdata.hash
-        content[:version] = VERSION
-      when "MapInfos"
-        content = { mapinfos: {} }
-        mapinfos = rxdata.sort_by { |key, value| value.order }.to_h
-        mapinfos.each do |key, value|
-          content[:mapinfos][key] = value.hash
-        end
-        content[:version] = VERSION
-      when /^Map\d+$/
-        content = rxdata.hash
-        content[:version] = VERSION
       else
-        content[name.to_s.downcase] = []
-        rxdata.each_with_index do |value|
-          content[name.to_s.downcase] << value.hash unless value == nil
-        end
+        content[:data] = rxdata.rmxp_serialize
         content[:version] = VERSION
       end
 
