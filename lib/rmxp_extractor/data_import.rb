@@ -1,9 +1,13 @@
 module RMXPExtractor
-  def self.import
-    STDERR.puts "No Data_JSON Directory!" unless Dir.exists? "./Data_JSON"
-    exit 1 unless Dir.exists? "./Data_JSON"
+  def self.import(format)
+    STDERR.puts "No Data_JSON Directory!" unless Dir.exists? "./Data_#{format.upcase}"
+    exit 1 unless Dir.exists? "./Data_#{format.upcase}"
 
     require "oj"
+    require "toml-rb"
+    require "yaml"
+    # require "active_support"
+    # require "active_support/core_ext"
     require "ruby-progressbar"
     require "fileutils"
     require "pathname"
@@ -12,34 +16,46 @@ module RMXPExtractor
     require_relative "script_handler"
 
     window_size = 120
+    progress_format = "%a /%e |%B| %p%% %c/%C %r files/sec %t, currently processing: "
     progress = ProgressBar.create(
-      format: "%a /%e |%B| %p%% %c/%C %r files/sec %t",
+      format: progress_format,
       starting_at: 0,
       total: nil,
       output: $stderr,
       length: window_size,
-      title: "Imported",
+      title: "imported",
       remainder_mark: "\e[0;30m█\e[0m",
       progress_mark: "█",
       unknown_progress_animation_steps: ["==>", ">==", "=>="],
     )
     Dir.mkdir "./Data" unless Dir.exists? "./Data"
-    paths = Pathname.glob(("./Data_JSON/" + ("*" + ".json")))
+    paths = Pathname.glob(("./Data_#{format.upcase}/" + ("*" + ".#{format}")))
     count = paths.size
     progress.total = count
     paths.each_with_index do |path, i|
-      name = path.basename(".json")
-      json = Oj.load path.read(mode: "rb")
+      name = path.basename(".#{format}")
+      progress.format = progress_format + name.to_s
+      file_contents = path.read(mode: "rb")
+      hash = case format
+        when "json"
+          Oj.load file_contents
+        when "yaml"
+          YAML.load file_contents
+        when "toml"
+          TomlRB.parse file_contents
+        when "rb"
+          eval file_contents # Yes, this SHOULD work. Is it bad? Yes.
+        end
 
-      puts "\n\e[33;1mWARNING: Incompatible version format in #{name.to_s}!\e[0m\n" if json["version"] != VERSION
+      warn "\n\e[33;1mWARNING: Incompatible version format in #{name.to_s}!\e[0m\n" if hash["version"] != VERSION
 
       case name.to_s
-      when "xScripts"
-        RMXPExtractor.rpgscript("./", "./Scripts")
+      when "xScripts", "Scripts"
+        RMXPExtractor.rpgscript("./", "./Scripts", "#{name.to_s}")
         progress.increment
         return
       else
-        content = create_from_rmxp_serialize(json["data"])
+        content = create_from_rmxp_serialize(hash["data"])
       end
 
       rxdata = File.open("./Data/" + name.sub_ext(".rxdata").to_s, "wb")

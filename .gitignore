@@ -7,6 +7,10 @@
 /spec/reports/
 /tmp/
 Data*/*
+Scripts/*
+
+ins1
+ins2
 
 # rspec failure tracking
 .rspec_status

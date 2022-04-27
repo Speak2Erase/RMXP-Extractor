@@ -2,7 +2,7 @@
 require "zlib"
 
 module RMXPExtractor
-  def self.rpgscript(game_dir, scripts_dir, extract = false)
+  def self.rpgscript(game_dir, scripts_dir, script_name, extract = false)
     # Determine version of game engine
     game_data_dir = File.join(game_dir, "Data")
     unless Dir.exist? game_data_dir
@@ -10,19 +10,7 @@ module RMXPExtractor
       exit 1
     end
 
-    target_path = nil
-    Dir.entries(game_data_dir).each do |e|
-      ext = File.extname(e)
-      if ext =~ /\.r[xv]data2?/
-        target_path = File.join(game_data_dir, "xScripts" + ext)
-        break
-      end
-    end
-
-    unless target_path
-      STDERR.puts "warning: could not determine game engine version, assuming XP"
-      target_path = File.join(game_data_dir, "xScripts.rxdata")
-    end
+    target_path = File.join(game_data_dir, script_name)
 
     # Generate path of script list
     list_path = File.join(scripts_dir, "_scripts.txt")

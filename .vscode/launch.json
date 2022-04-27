@@ -9,7 +9,7 @@
             "type": "Ruby",
             "request": "launch",
             "program": "${workspaceRoot}/bin/rmxp_extractor",
-            "args": ["import"]
+            "args": ["export", "rb"]
         }
     ]
 }

@@ -9,11 +9,11 @@ def create_from_rmxp_serialize(obj)
     ret = {}
     # Hashes have no map method. Why? I dunno!
     obj.each do |key, value|
-      if key.start_with?("class ")
+      if key.is_a?(String) && key.start_with?("class ")
         const = const_from_string(key.delete_prefix("class "))
         ret = const.new.from_rmxp_serialize(value)
       else
-        if key =~ /\A[0-9]+\z/ # Key is an integer
+        if key.is_a?(String) && key =~ /\A[0-9]+\z/ # Key is an integer
           key = key.to_i
         end
         ret[key] = create_from_rmxp_serialize(value)
@@ -108,6 +108,20 @@ class Table
   def self._load(obj)
     data = obj.unpack("VVVVVv*")
     @num_of_dimensions, @xsize, @ysize, @zsize, @num_of_elements, *@elements = *data
+    if @num_of_dimensions > 1
+      if @xsize > 1
+        @elements = @elements.each_slice(@xsize).to_a
+      else
+        @elements = @elements.map { |element| [element] }
+      end
+    end
+    if @num_of_dimensions > 2
+      if @ysize > 1
+        @elements = @elements.each_slice(@ysize).to_a
+      else
+        @elements = @elements.map { |element| [element] }
+      end
+    end
   end
 end
 

@@ -12,23 +12,31 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    amazing_print (1.4.0)
+    citrus (3.0.2)
     fileutils (1.6.0)
     json (2.6.1)
     oj (3.13.11)
     pathname (0.2.0)
     ruby-progressbar (1.11.0)
+    toml-rb (2.1.2)
+      citrus (~> 3.0, > 3.0)
+    yaml (0.1.1)
     zlib (2.1.1)
 
 PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  amazing_print
   fileutils
   json
   oj
   pathname
   rmxp_extractor!
   ruby-progressbar
+  toml-rb
+  yaml
   zlib
 
 BUNDLED WITH
