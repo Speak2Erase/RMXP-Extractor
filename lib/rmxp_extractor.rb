@@ -4,7 +4,7 @@ module RMXPExtractor
   require "rmxp_extractor/script_handler"
   require "rmxp_extractor/version"
 
-  FORMATS = ["toml", "json", "yaml", "rb"]
+  FORMATS = ["json", "yaml", "rb"]
 
   def self.usage
     STDERR.puts "usage: rmxp_extractor import/export <type = json> | scripts"

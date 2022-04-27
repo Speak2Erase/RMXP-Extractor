@@ -1,7 +1,7 @@
 # RMXP-Extractor
 
 A tool designed to dump rxdata to various git compatible formats. Some work better than others, though.
-Toml is extremely slow in comparison to json or yaml. I'd suggest sticking to JSON generally.
+YAML is slow in comparison to JSON. I'd suggest sticking to JSON generally.
 
 Originally, I used a complex monkey patched system to dump things to a hash that was very slow and imprecise. 
 Now, it uses some neat tricks to do it relatively efficiently. 
