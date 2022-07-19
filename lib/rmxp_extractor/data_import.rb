@@ -4,7 +4,7 @@ module RMXPExtractor
     exit 1 unless Dir.exists? "./Data_#{format.upcase}"
 
     require "oj"
-    require "toml-rb"
+    # require "toml-rb"
     require "yaml"
     # require "active_support"
     # require "active_support/core_ext"
