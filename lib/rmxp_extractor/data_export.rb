@@ -4,7 +4,7 @@ module RMXPExtractor
     exit 1 unless Dir.exists? "./Data"
 
     require "json"
-    require "toml-rb"
+    # require "toml-rb"
     require "yaml"
     require "amazing_print"
     require "ruby-progressbar"
