@@ -1,10 +1,10 @@
 module RMXPExtractor
   def self.export(format)
+    format ||= "json"
     STDERR.puts "No Data Directory!" unless Dir.exists? "./Data"
     exit 1 unless Dir.exists? "./Data"
 
     require "json"
-    # require "toml-rb"
     require "yaml"
     require "amazing_print"
     require "ruby-progressbar"
@@ -13,6 +13,10 @@ module RMXPExtractor
     require "readline"
     require_relative "classnames"
     require_relative "script_handler"
+
+    if format == "ron"
+      require_relative "ron"
+    end
 
     window_size = 120
     progress_format = "%a /%e |%B| %p%% %c/%C %r files/sec %t, currently processing: "
@@ -35,7 +39,13 @@ module RMXPExtractor
       content = Hash.new
 
       name = path.basename(".rxdata")
-      rxdata = Marshal.load(path.read(mode: "rb"))
+      begin
+        rxdata = Marshal.load(path.read(mode: "rb"))
+      rescue TypeError => e # Failed to load
+        puts "Failed to load file #{path}.\n"
+        next
+      end
+
       progress.format = progress_format + name.to_s
       case name.to_s
       when "xScripts", "Scripts"
@@ -56,6 +66,8 @@ module RMXPExtractor
                   TomlRB.dump(content)
                 when "rb"
                   content.ai(index: false, indent: 2, plain: true)
+                when "ron"
+                  content["data"]
                 end
 
       progress.increment

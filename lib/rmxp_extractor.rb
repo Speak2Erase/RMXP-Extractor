@@ -4,7 +4,7 @@ module RMXPExtractor
   require "rmxp_extractor/script_handler"
   require "rmxp_extractor/version"
 
-  FORMATS = ["json", "yaml", "rb"]
+  FORMATS = ["json", "yaml", "rb", "ron"]
 
   def self.usage
     STDERR.puts "usage: rmxp_extractor import/export <type = json> | scripts"
@@ -23,10 +23,11 @@ module RMXPExtractor
       export(type[1])
     when "scripts"
       if type.length < 4 || type.length > 5
-        STDERR.puts "usage: rmxp_extractor scripts scripts_dir scripts_name game_dir [x]"
+        STDERR.puts "usage: rmxp_extractor scripts game_dir scripts_dir scripts_name  [x]"
         exit 1
       else
-        RMXPExtractor.rpgscript(type[3], type[4], type[5] == "x")
+        puts type.to_s
+        RMXPExtractor.rpgscript(type[1], type[2], type[3], type[4] == "x")
       end
     else
       RMXPExtractor.usage

@@ -4,16 +4,18 @@ module RMXPExtractor
     exit 1 unless Dir.exists? "./Data_#{format.upcase}"
 
     require "oj"
-    # require "toml-rb"
     require "yaml"
-    # require "active_support"
-    # require "active_support/core_ext"
     require "ruby-progressbar"
     require "fileutils"
     require "pathname"
     require "readline"
     require_relative "classnames"
     require_relative "script_handler"
+
+    if format == "ron"
+      puts "RON not supported for importing yet"
+      exit 1
+    end
 
     window_size = 120
     progress_format = "%a /%e |%B| %p%% %c/%C %r files/sec %t, currently processing: "

@@ -96,32 +96,40 @@ class Color
   end
 
   def self._load(obj)
-    @red, @green, @blue, @alpha = *obj.unpack("EEEE")
+    red, green, blue, alpha = *obj.unpack("EEEE")
+    obj = Color.new
+    obj.red = red; obj.green = green; obj.blue = blue; obj.alpha = alpha
+    obj
   end
 end
 
 class Table
+  attr_accessor :num_of_dimensions, :xsize, :ysize, :zsize, :num_of_elements, :elements
+
   def _dump(limit)
     [@num_of_dimensions, @xsize, @ysize, @zsize, @num_of_elements, *@elements.flatten].pack("VVVVVv*")
   end
 
   def self._load(obj)
     data = obj.unpack("VVVVVv*")
-    @num_of_dimensions, @xsize, @ysize, @zsize, @num_of_elements, *@elements = *data
-    if @num_of_dimensions > 1
-      if @xsize > 1
-        @elements = @elements.each_slice(@xsize).to_a
+    obj = self.new
+    num_of_dimensions, xsize, ysize, zsize, num_of_elements, *elements = *data
+    if num_of_dimensions > 1
+      if xsize > 1
+        elements = elements.each_slice(xsize).to_a
       else
-        @elements = @elements.map { |element| [element] }
+        elements = elements.map { |element| [element] }
       end
     end
-    if @num_of_dimensions > 2
-      if @ysize > 1
-        @elements = @elements.each_slice(@ysize).to_a
+    if num_of_dimensions > 2
+      if ysize > 1
+        elements = elements.each_slice(ysize).to_a
       else
-        @elements = @elements.map { |element| [element] }
+        elements = elements.map { |element| [element] }
       end
     end
+    obj.num_of_dimensions = num_of_dimensions; obj.xsize = xsize; obj.ysize = ysize; obj.zsize = zsize; obj.elements = elements
+    obj
   end
 end
 
@@ -133,7 +141,9 @@ class Tone
   end
 
   def self._load(obj)
-    @red, @green, @blue, @gray = *obj.unpack("EEEE")
+    red, green, blue, gray = *obj.unpack("EEEE")
+    obj = Tone.new
+    obj.red = red; obj.green = green; obj.blue = blue; obj.gray = gray
   end
 end
 
