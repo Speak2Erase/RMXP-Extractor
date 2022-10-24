@@ -236,3 +236,9 @@ module RPG
     end
   end
 end
+
+class Script
+  attr_accessor :id
+  attr_accessor :name
+  attr_accessor :data
+end
