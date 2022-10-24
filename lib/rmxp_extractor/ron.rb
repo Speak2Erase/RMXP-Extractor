@@ -36,7 +36,7 @@ class Table
       str += "#{"  " * $indent}"
       @elements.each_with_index do |e, index|
         str += "#{e}, "
-        str += "\n#{"  " * $indent}" if (index + 1) % 10 == 0
+        str += "\n#{"  " * $indent}" if (index + 1) % 8 == 0
       end
       str += "\n"
     when 2

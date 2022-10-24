@@ -7,7 +7,7 @@ module RMXPExtractor
   FORMATS = ["json", "yaml", "rb", "ron"]
 
   def self.usage
-    STDERR.puts "usage: rmxp_extractor import/export <type = json> | scripts"
+    STDERR.puts "usage: rmxp_extractor < -v/--version > import/export <type = json> | scripts"
     exit 1
   end
 
@@ -15,6 +15,8 @@ module RMXPExtractor
     RMXPExtractor.usage if type.length < 1
 
     case type[0]
+    when "-v", "--version"
+      puts VERSION
     when "import"
       check_format(type[1])
       import(type[1])

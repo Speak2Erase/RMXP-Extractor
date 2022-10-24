@@ -50,6 +50,10 @@ module RMXPExtractor
       case name.to_s
       when "xScripts", "Scripts"
         RMXPExtractor.rpgscript("./", "./Scripts", "#{name.to_s}.rxdata", true)
+        content["data"] = rxdata.map do |a| 
+          a[2] = a[2].bytes
+          a
+        end.rmxp_serialize
         content["version"] = VERSION
       else
         content["data"] = rxdata.rmxp_serialize

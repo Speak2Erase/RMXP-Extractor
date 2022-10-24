@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rmxp_extractor (1.4)
+    rmxp_extractor (1.5)
       fileutils
       json
       oj
