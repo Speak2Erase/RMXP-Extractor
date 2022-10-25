@@ -16,19 +16,17 @@ end
 
 class Table
   def rmxp_serialize
-    str = "Array(\n"
+    str = "Table#{@num_of_dimensions}(\n"
     $indent += 2
-    str += "#{"  " * $indent}v: 1,\n"
-    str += "#{"  " * $indent}dim: ("
+    str += "#{"  " * $indent}"
     str += case @num_of_dimensions
       when 1
-        "#{@xsize}"
+        "xsize: #{@xsize},\n"
       when 2
-        "#{@ysize}, #{@xsize}"
+        "xsize: #{@xsize}, ysize: #{@ysize},\n"
       when 3
-        "#{@zsize}, #{@ysize}, #{@xsize}"
+        "xsize: #{@xsize}, ysize: #{@ysize}, zsize: #{@zsize},\n"
       end
-    str += "),\n"
     str += "#{"  " * $indent}data: [\n"
     $indent += 2
     case @num_of_dimensions

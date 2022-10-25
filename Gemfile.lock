@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rmxp_extractor (1.5)
+    rmxp_extractor (1.7)
       fileutils
       json
       oj
@@ -22,6 +22,7 @@ GEM
     zlib (2.1.1)
 
 PLATFORMS
+  x64-mingw-ucrt
   x86_64-linux
 
 DEPENDENCIES
