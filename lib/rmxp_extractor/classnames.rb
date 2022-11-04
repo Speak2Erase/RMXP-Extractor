@@ -144,6 +144,7 @@ class Tone
     red, green, blue, gray = *obj.unpack("EEEE")
     obj = Tone.new
     obj.red = red; obj.green = green; obj.blue = blue; obj.gray = gray
+    obj
   end
 end
 
