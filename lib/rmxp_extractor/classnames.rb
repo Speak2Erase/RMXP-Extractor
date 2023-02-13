@@ -112,8 +112,8 @@ class Table
 
   def self._load(obj)
     data = obj.unpack("VVVVVv*")
-    obj = self.new
     num_of_dimensions, xsize, ysize, zsize, num_of_elements, *elements = *data
+
     if num_of_dimensions > 1
       if xsize > 1
         elements = elements.each_slice(xsize).to_a
@@ -121,6 +121,7 @@ class Table
         elements = elements.map { |element| [element] }
       end
     end
+
     if num_of_dimensions > 2
       if ysize > 1
         elements = elements.each_slice(ysize).to_a
@@ -128,8 +129,15 @@ class Table
         elements = elements.map { |element| [element] }
       end
     end
-    obj.num_of_dimensions = num_of_dimensions; obj.xsize = xsize; obj.ysize = ysize; obj.zsize = zsize; obj.elements = elements
-    obj
+
+    instance = self.new
+    instance.num_of_dimensions = num_of_dimensions
+    instance.xsize = xsize
+    instance.ysize = ysize
+    instance.zsize = zsize
+    instance.num_of_elements = num_of_elements
+    instance.elements = elements
+    return instance
   end
 end
 
