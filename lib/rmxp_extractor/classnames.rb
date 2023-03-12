@@ -32,7 +32,7 @@ end
 class Object
   def rmxp_serialize
     hash = {}
-    self.instance_variables.each { |var| hash[var.to_s.delete("@")] = self.instance_variable_get(var).rmxp_serialize }
+    self.instance_variables.sort.each { |var| hash[var.to_s.delete("@")] = self.instance_variable_get(var).rmxp_serialize }
     { "class #{self.class.name}" => hash }
   end
 
@@ -65,7 +65,7 @@ end
 class Hash
   def rmxp_serialize
     hash = {}
-    self.each { |key, value| hash[key] = value.rmxp_serialize }
+    self.sort.each { |key, value| hash[key] = value.rmxp_serialize }
     hash
   end
 end

@@ -7,7 +7,7 @@ class Object
   def rmxp_serialize
     $indent += 2
     str = "#{self.class.name.split("::").last}(\n"
-    self.instance_variables.each { |var| str += "#{"  " * $indent}#{var.to_s.delete("@")}: #{self.instance_variable_get(var).rmxp_serialize},\n" }
+    self.instance_variables.sort.each { |var| str += "#{"  " * $indent}#{var.to_s.delete("@")}: #{self.instance_variable_get(var).rmxp_serialize},\n" }
     $indent -= 2
     str += "#{"  " * $indent})"
     str
@@ -65,7 +65,7 @@ class Hash
   def rmxp_serialize
     str = "{\n"
     $indent += 2
-    self.each { |key, value| str += "#{"  " * $indent}#{key.rmxp_serialize}: #{value.rmxp_serialize},\n" }
+    self.sort.each { |key, value| str += "#{"  " * $indent}#{key.rmxp_serialize}: #{value.rmxp_serialize},\n" }
     $indent -= 2
     str += "#{"  " * $indent}}"
     str
