@@ -92,13 +92,12 @@ class Color
   attr_accessor :red, :green, :blue, :alpha
 
   def _dump(limit)
-    [@red, @green, @blue, @alpha].pack("EEEE")
+    [@red, @green, @blue, @alpha].pack("d4")
   end
 
-  def self._load(obj)
-    red, green, blue, alpha = *obj.unpack("EEEE")
+  def self._load(data)
     obj = Color.new
-    obj.red = red; obj.green = green; obj.blue = blue; obj.alpha = alpha
+    obj.red, obj.green, obj.blue, obj.alpha = *data.unpack("d4")
     obj
   end
 end
@@ -107,37 +106,13 @@ class Table
   attr_accessor :num_of_dimensions, :xsize, :ysize, :zsize, :num_of_elements, :elements
 
   def _dump(limit)
-    [@num_of_dimensions, @xsize, @ysize, @zsize, @num_of_elements, *@elements.flatten].pack("VVVVVv*")
+    [@num_of_dimensions, @xsize, @ysize, @zsize, @num_of_elements, @elements].flatten.pack("VVVVVv*")
   end
 
-  def self._load(obj)
-    data = obj.unpack("VVVVVv*")
-    num_of_dimensions, xsize, ysize, zsize, num_of_elements, *elements = *data
-
-    if num_of_dimensions > 1
-      if xsize > 1
-        elements = elements.each_slice(xsize).to_a
-      else
-        elements = elements.map { |element| [element] }
-      end
-    end
-
-    if num_of_dimensions > 2
-      if ysize > 1
-        elements = elements.each_slice(ysize).to_a
-      else
-        elements = elements.map { |element| [element] }
-      end
-    end
-
-    instance = self.new
-    instance.num_of_dimensions = num_of_dimensions
-    instance.xsize = xsize
-    instance.ysize = ysize
-    instance.zsize = zsize
-    instance.num_of_elements = num_of_elements
-    instance.elements = elements
-    return instance
+  def self._load(data)
+    obj = self.new
+    obj.num_of_dimensions, obj.xsize, obj.ysize, obj.zsize, obj.num_of_elements, *obj.elements = *data.unpack("VVVVVv*")
+    obj
   end
 end
 
@@ -145,13 +120,12 @@ class Tone
   attr_accessor :red, :green, :blue, :gray
 
   def _dump(limit)
-    [@red, @green, @blue, @gray].pack("EEEE")
+    [@red, @green, @blue, @gray].pack("d4")
   end
 
-  def self._load(obj)
-    red, green, blue, gray = *obj.unpack("EEEE")
+  def self._load(data)
     obj = Tone.new
-    obj.red = red; obj.green = green; obj.blue = blue; obj.gray = gray
+    obj.red, obj.green, obj.blue, obj.gray = *data.unpack("d4")
     obj
   end
 end

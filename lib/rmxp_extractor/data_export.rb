@@ -50,7 +50,7 @@ module RMXPExtractor
       case name.to_s
       when "xScripts", "Scripts"
         RMXPExtractor.rpgscript("./", "./Scripts", "#{name.to_s}.rxdata", true)
-        content["data"] = rxdata.map do |a| 
+        content["data"] = rxdata.map do |a|
           s = Script.new
           s.id, s.name, s.data = a
           s.data = s.data.bytes
@@ -68,8 +68,6 @@ module RMXPExtractor
                   content.to_yaml
                 when "json"
                   JSON.pretty_generate(content)
-                when "toml"
-                  TomlRB.dump(content)
                 when "rb"
                   content.ai(index: false, indent: 2, plain: true)
                 when "ron"

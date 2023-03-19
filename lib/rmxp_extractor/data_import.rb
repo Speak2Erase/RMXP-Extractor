@@ -43,8 +43,6 @@ module RMXPExtractor
           Oj.load file_contents
         when "yaml"
           YAML.load file_contents
-        when "toml"
-          TomlRB.parse file_contents
         when "rb"
           eval file_contents # Yes, this SHOULD work. Is it bad? Yes.
         end
@@ -60,8 +58,15 @@ module RMXPExtractor
         content = create_from_rmxp_serialize(hash["data"])
       end
 
-      rxdata = File.open("./Data/" + name.sub_ext(".rxdata").to_s, "wb")
-      rxdata.puts Marshal.dump(content)
+      begin
+        dump = Marshal.dump(content)
+
+        rxdata = File.open("./Data/" + name.sub_ext(".rxdata").to_s, "wb")
+        rxdata.puts dump
+      rescue TypeError => e
+        puts "Failed to dump file #{path}.\n"
+        next
+      end
 
       progress.increment
     end
