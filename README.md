@@ -1,4 +1,6 @@
 # RMXP-Extractor
+[![Gem Version](https://badge.fury.io/rb/rmxp_extractor.svg)](https://badge.fury.io/rb/rmxp_extractor)![Gem](https://img.shields.io/gem/dt/rmxp_extractor)
+---
 
 A tool designed to dump rxdata to various git compatible formats. Some work better than others, though.
 YAML is slow in comparison to JSON. I'd suggest sticking to JSON generally.
