@@ -1,7 +1,7 @@
 module RMXPExtractor
   def self.import(format)
-    STDERR.puts "No Data_JSON Directory!" unless Dir.exists? "./Data_#{format.upcase}"
-    exit 1 unless Dir.exists? "./Data_#{format.upcase}"
+    STDERR.puts "No Data_JSON Directory!" unless Dir.exist? "./Data_#{format.upcase}"
+    exit 1 unless Dir.exist? "./Data_#{format.upcase}"
 
     require "oj"
     require "yaml"
@@ -30,7 +30,7 @@ module RMXPExtractor
       progress_mark: "█",
       unknown_progress_animation_steps: ["==>", ">==", "=>="],
     )
-    Dir.mkdir "./Data" unless Dir.exists? "./Data"
+    Dir.mkdir "./Data" unless Dir.exist? "./Data"
     paths = Pathname.glob(("./Data_#{format.upcase}/" + ("*" + ".#{format}")))
     count = paths.size
     progress.total = count

@@ -17,7 +17,7 @@ module RMXPExtractor
 
     if extract
       # Make sure the script directory exists
-      Dir.mkdir(scripts_dir) unless Dir.exists? scripts_dir
+      Dir.mkdir(scripts_dir) unless Dir.exist? scripts_dir
 
       # Keep track of names of scripts extracted so we can warn about duplicates
       names = Hash.new(0)
